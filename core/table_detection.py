@@ -5,20 +5,6 @@ TableDetector: finds the signing-sheet table inside a raw phone photo and
 straightens it, following this pipeline (matches the approved architecture
 diagram):
 
-    Attendance sheet image
-        -> Perspective correction (4-corner homography, not just rotation)
-        -> Table line detection (projection histogram + Hough transform)
-        -> Row / column grid line positions
-        -> Table-line mask (used later to strip grid lines out of cell crops)
-
-Design note: the printed table layout is static, but these are handheld
-phone photos, so the table's position, rotation AND perspective differ in
-every shot. A pure rotation fix (deskew) only corrects in-plane tilt; it
-does not correct keystoning (the top of the table looking narrower/wider
-than the bottom because the camera wasn't held perfectly parallel to the
-page). This version finds the table's actual 4 corners and warps them to a
-rectangle with a full perspective transform, which subsumes rotation as a
-special case.
 """
 
 import os
